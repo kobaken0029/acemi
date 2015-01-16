@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product name:</strong>
+  <%= @product.product_name %>
+</p>
+
+<p>
+  <strong>User name:</strong>
+  <%= @product.user_name %>
+</p>
+
+
+<p>
+  <strong>Like count:</strong>
+  <!--<button data-count="@product.like_count" onClick="alert('count is ' + data('count'));"-->
+  <%= @product.like_count %>
+</p>
+<button id="like" data-count="<%= @product.like_count %>">いいね！</button>
+
+<script>
+  $(function() {
+    var value;
+    
+    $('#like').on("click", function() {
+      value = $(this).attr('data-count');
+      
+      if (confirm("Can you change this entity?")) {
+        $('#product_like_count').val(++value);
+        $('form').submit();
+      }
+      
+    });
+  });
+</script>
+
+<%= form_for(@product) do |f| %>
+  <div class="field" style="display:none;">
+    <%= f.label :like_count %><br>
+    <%= f.text_field :like_count %>
+  </div>
+  <div class="actions" style="display:none;">
+    <%= f.submit %>
+  </div>
+  <% end %>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>
